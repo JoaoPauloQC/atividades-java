@@ -6,9 +6,9 @@ public class Main {
 
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
-        String[] students_name = new String[4];
-        Integer[] students_age = new Integer[4];
-        while(true){
+        String[] students_name = new String[10];
+        Integer[] students_age = new Integer[10];
+        do{
             printMenu();
             try{
                 int choice = sc.nextInt();
@@ -69,10 +69,11 @@ public class Main {
                     System.out.println("Escolha inválida. ");
                 }
             }catch(Exception e){
-                System.out.println("Escolha inválida. ");
+                System.out.println("Escolha inválida. " + e);
                 sc = new Scanner(System.in);
             }
         }
+        while(true);
     }
 
     public static void printMenu(){
@@ -108,8 +109,10 @@ public class Main {
 
     public static int searchStudent(String[] list, String name){
         for(int i = 0; i<list.length;i++){
-            if(list[i].equals(name)){
-                return i;
+            if(list[i] != null){
+                if(list[i].equals(name)){
+                    return i;
+                }
             }
         }
         return -1;
