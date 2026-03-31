@@ -43,6 +43,7 @@ public class Main {
                     list(students_age);
                     System.out.print("Nomes: ");
                     list(students_name);
+                    System.out.println("Quantidade de alunos cadastrados: "+ howManyStudents(students_name));
                 }
                 else if(choice == 3){
                     printDoIt("Digite o nome que deseja buscar: ");
@@ -154,6 +155,16 @@ public class Main {
         int minutes = localDateTime.getMinute();
         return " dia " + day + " de " + month + " de " + year + ", no horário " + hours + ":" + minutes;
 
+    }
+
+    public static int howManyStudents(String[] list){
+        int count = 0;
+        for(int i =0 ; i<list.length;i++){
+            if(list[i] != null){
+                count++;
+            }
+        }
+        return count;
     }
 
 }
