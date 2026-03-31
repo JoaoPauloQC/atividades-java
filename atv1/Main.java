@@ -54,7 +54,7 @@ public class Main {
                         System.out.println("Nome não encontrado");
                     }
                     else{
-                        System.out.println("Nome encontrado na posição: " + position);
+                        System.out.println("Nome encontrado na posição: " + position + 1);
                     }
                 }
                 else if(choice == 4){
@@ -111,7 +111,7 @@ public class Main {
     public static int searchStudent(String[] list, String name){
         for(int i = 0; i<list.length;i++){
             if(list[i] != null){
-                if(list[i].equals(name)){
+                if(list[i].equalsIgnoreCase(name)){
                     return i;
                 }
             }
