@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -7,15 +8,19 @@ public class Main {
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
         String[] students_name = new String[10];
+        // int é um tipo primitivo (mais leve e rápido)
+        // Integer é um objeto (wrapper), permite usar null e métodos
         Integer[] students_age = new Integer[10];
+        // while: verifica a condição antes de executar
+        // do-while: executa pelo menos uma vez antes de verificar
         do{
             printMenu();
+            System.out.println("Quantidade de alunos cadastrados: "+ howManyStudents(students_name));
             try{
                 int choice = sc.nextInt();
-                int index_to_be_added_age = findNextAdd(students_age);
-                int index_to_be_added_name = findNextAdd(students_name) ;
+                int index_to_be_added = findNextAdd(students_name);
                 if(choice == 1 ){
-                    if(index_to_be_added_age != -1 && index_to_be_added_name != -1){
+                    if(index_to_be_added != -1){
                         printDoIt("Digite o nome do aluno: ");
                         sc.nextLine();
                         String name = sc.nextLine();
@@ -30,8 +35,8 @@ public class Main {
                                 break;
                             }
                         }
-                        students_age[index_to_be_added_age] = idade;
-                        students_name[index_to_be_added_name] = name;
+                        students_age[index_to_be_added] = idade;
+                        students_name[index_to_be_added] = name;
                     
                     }else{
                         System.out.println("Limite atingido");
@@ -39,10 +44,7 @@ public class Main {
                     
                 }
                 else if( choice == 2){
-                    System.out.print("Idades: ");
-                    list(students_age);
-                    System.out.print("Nomes: ");
-                    list(students_name);
+                    list(students_name, students_age);
                     System.out.println("Quantidade de alunos cadastrados: "+ howManyStudents(students_name));
                 }
                 else if(choice == 3){
@@ -54,7 +56,7 @@ public class Main {
                         System.out.println("Nome não encontrado");
                     }
                     else{
-                        System.out.println("Nome encontrado na posição: " + position + 1);
+                        System.out.println("Nome encontrado na posição: " + (position + 1) + " e com a idade: " + students_age[position]);
                     }
                 }
                 else if(choice == 4){
@@ -89,24 +91,14 @@ public class Main {
         System.out.println(it);;
     }
 
-    public static void list(String[] list){
-        String text = "";
-        for(int i = 0; i<list.length;i++){
-            if(list[i] != null){
-                text += " " + list[i];
+    public static void list(String[] name_list,Integer[] age_list){
+        for(int i = 0; i<name_list.length;i++){
+            if(name_list[i] != null){
+                System.out.println("Nome: " + name_list[i] + " | Idade: " + age_list[i] );
             }
         }
-        System.out.println(text);
     }
-    public static void list(Integer[] list){
-        String text = "";
-        for(int i = 0; i<list.length;i++){
-            if(list[i] != null){
-                text += " " + list[i];
-            }
-        }
-        System.out.println(text);
-    }
+    
 
     public static int searchStudent(String[] list, String name){
         for(int i = 0; i<list.length;i++){
@@ -126,14 +118,7 @@ public class Main {
         }
         return -1;
     }
-    public static int findNextAdd(Integer[] list){
-        for(int i = 0; i<list.length;i++){
-            if(list[i] == null){
-                return i;
-            }
-        }
-        return -1;
-    }
+
     public static Double media(Integer[] list){
         double divisor = 0;
         double sum = 0;
@@ -148,13 +133,8 @@ public class Main {
 
     }
     public static String formmatedData(LocalDateTime localDateTime){
-        int day = localDateTime.getDayOfMonth();
-        int month = localDateTime.getMonthValue();
-        int year = localDateTime.getYear();
-        int hours = localDateTime.getHour();
-        int minutes = localDateTime.getMinute();
-        return " dia " + day + " de " + month + " de " + year + ", no horário " + hours + ":" + minutes;
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return localDateTime.format(formatter);
     }
 
     public static int howManyStudents(String[] list){
